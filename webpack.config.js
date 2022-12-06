@@ -7,6 +7,14 @@ const nodeExternals = require('webpack-node-externals');
 
 const cssLoader = 'css-loader';
 
+const sassLoader = {
+  loader: 'sass-loader',
+  options: {
+    sassOptions: {
+      includePaths: ['node_modules']
+    }
+  }
+};
 
 const postcssLoader = {
   loader: 'postcss-loader',
@@ -80,6 +88,13 @@ module.exports = function(env, { analyze }) {
           use: [ cssLoader, postcssLoader ]
         },
         {
+          test: /\.scss$/i,
+          // For style loaded in src/main.js, it's not loaded by style-loader.
+          // It's for shared styles for shadow-dom only.
+          issuer: /[/\\]src[/\\]main\.(js|ts)$/,
+          use: [ cssLoader, postcssLoader, sassLoader ]
+        },
+        {
           test: /\.css$/i,
           // For style loaded in other js/ts files, it's loaded by style-loader.
           // They are directly injected to HTML head.
@@ -87,10 +102,23 @@ module.exports = function(env, { analyze }) {
           use: [ 'style-loader', cssLoader, postcssLoader ]
         },
         {
+          test: /\.scss$/i,
+          // For style loaded in other js/ts files, it's loaded by style-loader.
+          // They are directly injected to HTML head.
+          issuer: /(?<![/\\]src[/\\]main)\.(js|ts)$/,
+          use: [ 'style-loader', cssLoader, postcssLoader, sassLoader ]
+        },
+        {
           test: /\.css$/i,
           // For style loaded in html files, Aurelia will handle it.
           issuer: /\.html$/,
           use: [ cssLoader, postcssLoader ]
+        },
+        {
+          test: /\.scss$/i,
+          // For style loaded in html files, Aurelia will handle it.
+          issuer: /\.html$/,
+          use: [ cssLoader, postcssLoader, sassLoader ]
         },
         { test: /\.ts$/i, use: ['ts-loader', '@aurelia/webpack-loader'], exclude: /node_modules/ },
         {

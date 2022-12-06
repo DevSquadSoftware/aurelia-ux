@@ -5,7 +5,7 @@ import template from './k-link.html';
 
 import css from './k-link.scss';
 
-import { captureFilter, ifExistsThenTrue } from 'design-system/common';
+import { captureFilter, ifExistsThenTrue } from '../../common';
 
 @customElement({
   name: 'k-link',

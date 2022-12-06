@@ -12,7 +12,9 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "aurelia": "latest"
+    "aurelia": "latest",
+    "chart.js": "latest",
+    "@aurelia/validation-html": "latest"
   },
   "devDependencies": {
     "eslint": "^8.17.0",
@@ -42,7 +44,9 @@
     "jest-environment-jsdom": "^28.1.1",
     "jest-transform-stub": "^2.0.0",
     "@types/jest": "^28.1.1",
-    "@aurelia/ts-jest": "latest"
+    "@aurelia/ts-jest": "latest",
+    "sass-loader": "^13.0.0",
+    "sass": "^1.52.2"
   },
   "scripts": {
     "lint:js": "eslint src test --ext .js,.ts",
